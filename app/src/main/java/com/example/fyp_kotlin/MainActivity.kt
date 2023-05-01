@@ -31,12 +31,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputImageBtn: MaterialButton
     private lateinit var recognizeTextBtn: MaterialButton
     private lateinit var imageIv: ImageView
-    private lateinit var recognizedTextEt: EditText
+    //private lateinit var recognizedTextEt: EditText
     private lateinit var positionEnergy: String
     private lateinit var positionValueEnergy: String
     private lateinit var positionTotalfat: String
     private lateinit var positionSugar: String
     private lateinit var positionSodium: String
+
+    private lateinit var valueTotalfat: EditText
+    private lateinit var valueSugars: EditText
+    private lateinit var valueSodium: EditText
 
     private companion object{
         //to handle the result of Camera/Gallery permissions in onRequestPermissionResults
@@ -65,7 +69,10 @@ class MainActivity : AppCompatActivity() {
         inputImageBtn = findViewById(R.id.inputImageBtn)
         recognizeTextBtn = findViewById(R.id.recognizeTextBtn)
         imageIv = findViewById(R.id.imageIv)
-        recognizedTextEt = findViewById(R.id.recognizedTextEt)
+        //recognizedTextEt = findViewById(R.id.recognizedTextEt)
+        valueTotalfat = findViewById(R.id.editTotalfat)
+        valueSugars = findViewById(R.id.editSugars)
+        valueSodium = findViewById(R.id.editSodium)
 
         //init arrays of permissions required for Camera, Gallery
         cameraPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -186,7 +193,11 @@ class MainActivity : AppCompatActivity() {
                         .plus(", Sodium: ")
                         .plus(sodiumValue)
 
-                    recognizedTextEt.setText(output)
+                    //recognizedTextEt.setText(output)
+
+                    valueTotalfat.setText(sugarValue)
+                    valueSugars.setText(totalfatValue)
+                    valueSodium.setText(sodiumValue)
 
 
                     //val abc = newText.indexOf("Per 100g")

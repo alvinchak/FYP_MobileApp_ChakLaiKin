@@ -47,32 +47,137 @@
             android:orientation="vertical">
 
             <!--ImageView: Show image we took from Camera/Gallery-->
+
+            <!--TextView: Label to show that below will be the recognized text shown-->
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageIv"
                 android:layout_width="match_parent"
-                app:strokeWidth="2dp"
-                android:src="@drawable/ic_baseline_image_24"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:layout_height="wrap_content"/>
-
-            <!--TextView: Label to show that below will be the recognized text shown-->
+                android:src="@drawable/ic_baseline_image_24"
+                app:strokeWidth="2dp" />
+<!--
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Recognized Text:"/>
+                android:text="Recognized Text:" />
+-->
 
             <!--EditText: show the recognized text, You may use TextView instead-->
+            <!--
             <EditText
                 android:id="@+id/recognizedTextEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
+            -->
 
         </LinearLayout>
 
+
+
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Total fat:" />
+
+            <EditText
+                android:id="@+id/editTotalfat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Sugars:" />
+
+            <EditText
+                android:id="@+id/editSugars"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Sodium:" />
+
+            <EditText
+                android:id="@+id/editSodium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/GradingBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:text="GRADING"
+            app:backgroundTint="#25389F"
+            app:icon="@drawable/ic_baseline_grade_24" />
+    </LinearLayout>
 
 </LinearLayout>
