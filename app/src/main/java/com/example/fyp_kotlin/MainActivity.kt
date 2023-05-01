@@ -12,9 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
@@ -41,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var valueTotalfat: EditText
     private lateinit var valueSugars: EditText
     private lateinit var valueSodium: EditText
+    private lateinit var valueFoodType: EditText
 
     private companion object{
         //to handle the result of Camera/Gallery permissions in onRequestPermissionResults
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         valueTotalfat = findViewById(R.id.editTotalfat)
         valueSugars = findViewById(R.id.editSugars)
         valueSodium = findViewById(R.id.editSodium)
+        valueFoodType = findViewById(R.id.editFoodType)
 
         //init arrays of permissions required for Camera, Gallery
         cameraPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -199,6 +199,15 @@ class MainActivity : AppCompatActivity() {
                     valueSugars.setText(totalfatValue)
                     valueSodium.setText(sodiumValue)
 
+
+                    val radioFoodType = findViewById<RadioGroup>(R.id.foodType)
+                    val selectedRadioButtonId = radioFoodType.checkedRadioButtonId
+
+                    if (selectedRadioButtonId == R.id.radioButtonFood) {
+                        valueFoodType.setText("food")
+                    } else {
+                        valueFoodType.setText("drink")
+                    }
 
                     //val abc = newText.indexOf("Per 100g")
                     //recognizedTextEt.setText(abc)
