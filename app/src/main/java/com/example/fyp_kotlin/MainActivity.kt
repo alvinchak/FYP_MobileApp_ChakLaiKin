@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
@@ -22,8 +23,28 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import okhttp3.*
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
+
+    fun onCheckRatingClicked(v: View) {
+        val radioGroup = findViewById<RadioGroup>(R.id.foodType)
+        val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+        val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
+        val foodType = selectedRadioButton.text.toString()
+
+        val totalFats = findViewById<EditText>(R.id.editTotalfat).text.toString()
+        val sugars = findViewById<EditText>(R.id.editSugars).text.toString()
+        val sodium = findViewById<EditText>(R.id.editSodium).text.toString()
+
+        val intent = Intent(this, Rating::class.java)
+        intent.putExtra("FOOD_TYPE_KEY", foodType)
+        intent.putExtra("TOTAL_FATS_KEY", totalFats)
+        intent.putExtra("SUGARS_KEY", sugars)
+        intent.putExtra("SODIUM_KEY", sodium)
+        startActivity(intent)
+    }
 
     //UI Views
     private lateinit var inputImageBtn: MaterialButton
@@ -39,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var valueTotalfat: EditText
     private lateinit var valueSugars: EditText
     private lateinit var valueSodium: EditText
-    private lateinit var valueFoodType: EditText
 
     private companion object{
         //to handle the result of Camera/Gallery permissions in onRequestPermissionResults
@@ -72,7 +92,6 @@ class MainActivity : AppCompatActivity() {
         valueTotalfat = findViewById(R.id.editTotalfat)
         valueSugars = findViewById(R.id.editSugars)
         valueSodium = findViewById(R.id.editSodium)
-        valueFoodType = findViewById(R.id.editFoodType)
 
         //init arrays of permissions required for Camera, Gallery
         cameraPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -202,12 +221,6 @@ class MainActivity : AppCompatActivity() {
 
                     val radioFoodType = findViewById<RadioGroup>(R.id.foodType)
                     val selectedRadioButtonId = radioFoodType.checkedRadioButtonId
-
-                    if (selectedRadioButtonId == R.id.radioButtonFood) {
-                        valueFoodType.setText("food")
-                    } else {
-                        valueFoodType.setText("drink")
-                    }
 
                     //val abc = newText.indexOf("Per 100g")
                     //recognizedTextEt.setText(abc)

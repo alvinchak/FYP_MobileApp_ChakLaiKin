@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="Recognize"
+            android:text="Recognize Text"
             app:backgroundTint="#25389F"
             app:icon="@drawable/ic_baseline_document_scanner_24" />
 
@@ -186,7 +186,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="#b5b7ff"
-                android:text="Food"
+                android:text="food"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -198,16 +198,10 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="#b5dfff"
-                android:text="Drink"
+                android:text="drink"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/editFoodType"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:visibility="gone" />
         </RadioGroup>
 
     </LinearLayout>
