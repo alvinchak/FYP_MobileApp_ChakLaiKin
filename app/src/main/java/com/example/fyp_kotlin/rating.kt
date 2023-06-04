@@ -1,15 +1,30 @@
 package com.example.fyp_kotlin
 
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.*
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.IOException
 
-data class Nutrition(val id : String, val score : String, val grade : String)
+data class Nutrition(val score : String, val grade : String)
+data class RatingData(val date_time: String,
+                      val product_name: String,
+                      val food_type: String,
+                      val total_fats: String,
+                      val sugars: String,
+                      val sodium: String,
+                      val score: String,
+                      val grade: String)
+
 class Rating : AppCompatActivity() {
     val nutritions = mutableListOf<Nutrition>()
     val client = OkHttpClient()
@@ -18,6 +33,8 @@ class Rating : AppCompatActivity() {
     private lateinit var postTotalfat: String
     private lateinit var postSugars: String
     private lateinit var postSodium: String
+
+    private val SHARED_PREFS_NAME = "rating"
 
     fun getGradeDrawable(grade: String): Int {
         return when (grade) {
@@ -87,10 +104,9 @@ class Rating : AppCompatActivity() {
         val jsonArray = JSONArray(jsonString)
         for (i in 0 until jsonArray.length()) {
             val jsonObject = jsonArray.getJSONObject(i)
-            var id = "1"
             var score = jsonObject.getString("score")
             var grade = jsonObject.getString("grade")
-            val nutrition = Nutrition(id, score, grade)
+            val nutrition = Nutrition(score, grade)
             nutritions.add(nutrition)
         }
         val nutrition = nutritions[0]
@@ -115,6 +131,72 @@ class Rating : AppCompatActivity() {
         postTotalfat = intent.getStringExtra("TOTAL_FATS_KEY") ?: ""
         postSugars = intent.getStringExtra("SUGARS_KEY") ?: ""
         postSodium = intent.getStringExtra("SODIUM_KEY") ?: ""
+
+
+        val buttonSaveToFavourite = findViewById<Button>(R.id.button_save_to_favourite)
+        buttonSaveToFavourite.setOnClickListener {
+            saveToFavouritesAndNavigate()
+        }
     }
+
+    private fun saveToFavouritesAndNavigate() {
+        val productNameEditText = findViewById<EditText>(R.id.text_save_to_favourite)
+        val productName = productNameEditText.text.toString()
+        if (productName.isBlank()) {
+            Toast.makeText(this, "Please enter the product name", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+        val jsonRatingResultList = sharedPreferences.getString("result", null)
+
+        val tempRatingList = mutableListOf<RatingData>()
+
+        if (tempRatingList != null) {
+            val gson = Gson()
+            val ratingListType = object : TypeToken<List<RatingData>>() {}.type
+            val existingRatingList: List<RatingData>? = gson.fromJson(jsonRatingResultList, ratingListType)
+            if (existingRatingList != null) {
+                tempRatingList.addAll(existingRatingList)
+            }
+        }
+
+        val newRating = RatingData(
+            System.currentTimeMillis().toString(),
+            productName,
+            postFoodType,
+            postTotalfat,
+            postSugars,
+            postSodium,
+            nutritions[0].score,
+            nutritions[0].grade
+        )
+        tempRatingList.add(newRating)
+
+        val editor = sharedPreferences.edit()
+
+        val gson = Gson()
+        val updatedJsonRatingList = gson.toJson(tempRatingList)
+
+        editor.putString("result", updatedJsonRatingList)
+        editor.apply()
+
+        /*
+        AlertDialog.Builder(this)
+            .setTitle("Product Details")
+            .setMessage(updatedJsonRatingList)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+         */
+
+        val intent = Intent(this, RatingResult::class.java)
+        startActivity(intent)
+
+    }
+
+
 
 }

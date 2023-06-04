@@ -96,7 +96,8 @@
                 android:text="Save to Favourite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_save_to_favourite" />
+                app:layout_constraintTop_toBottomOf="@+id/text_save_to_favourite"
+                android:onClick="saveToFavouritesAndNavigate" />
 
         </LinearLayout>
 
