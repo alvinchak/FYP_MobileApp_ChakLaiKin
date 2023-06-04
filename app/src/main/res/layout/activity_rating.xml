@@ -6,13 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".Rating">
 
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="409dp"
-        android:layout_height="681dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/loading_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="381dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/grade_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:src="@drawable/grade_a"
+            android:layout_margin="0dp"/>
+
+        <TextView
+            android:id="@+id/score_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            android:layout_margin="0dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/save_to_favourite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="33sp"
+        android:paddingLeft="22sp"
+        android:paddingRight="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout4b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="22sp"
+            android:paddingRight="22sp"
+            android:paddingTop="22sp"
+            android:paddingBottom="22sp"
+            android:background="@drawable/shape"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" >
+
+            <TextView
+                android:id="@+id/text_title_favourite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter Product Name"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_margin="0dp" />
+
+            <EditText
+                android:id="@+id/text_save_to_favourite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="0dp" />
+
+            <Button
+                android:id="@+id/button_save_to_favourite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="11dp"
+                android:paddingTop="11sp"
+                android:paddingBottom="11sp"
+                android:text="Save to Favourite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_save_to_favourite" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
