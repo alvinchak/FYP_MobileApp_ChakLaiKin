@@ -123,6 +123,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val buttonToResult = findViewById<Button>(R.id.button_to_rating_result)
+        buttonToResult.setOnClickListener {
+            val intent = Intent(this, RatingResult::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun recognizeTextFromImage() {
@@ -221,6 +227,10 @@ class MainActivity : AppCompatActivity() {
 
                     val radioFoodType = findViewById<RadioGroup>(R.id.foodType)
                     val selectedRadioButtonId = radioFoodType.checkedRadioButtonId
+
+
+                    val ratingButton = findViewById<Button>(R.id.GradingBtn)
+                    ratingButton.visibility = View.VISIBLE
 
                     //val abc = newText.indexOf("Per 100g")
                     //recognizedTextEt.setText(abc)

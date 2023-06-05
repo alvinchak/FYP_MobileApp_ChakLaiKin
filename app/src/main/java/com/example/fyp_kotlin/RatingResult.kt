@@ -57,33 +57,23 @@ class RatingResult : AppCompatActivity() {
             }
         }
 
+        /*
+        AlertDialog.Builder(this)
+            .setTitle("Product Details")
+            .setMessage(products.toString())
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+         */
+
 
         // Sort products list by unique_id in descending order
         //products.sortByDescending { it.optString("unique_id", "0").toIntOrNull() ?: 0 }
 
         val adapter = RatingResultAdapter(this, products)
         listView.adapter = adapter
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val productData = products[position]
-            val details = """
-                Product Name: ${productData.getString("product_name")}
-                Food Type: ${productData.getString("food_type")}
-                Total Fats: ${productData.getString("total_fats")}
-                Sugars: ${productData.getString("sugars")}
-                Sodium: ${productData.getString("sodium")}
-                Score: ${productData.getString("score")}
-                Grade: ${productData.getString("grade")}
-            """.trimIndent()
-
-            AlertDialog.Builder(this)
-                .setTitle("Product Details")
-                .setMessage(details)
-                .setPositiveButton("OK") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
-        }
 
         val buttonBackToMain = findViewById<Button>(R.id.button_back_to_main)
         buttonBackToMain.setOnClickListener {
@@ -116,10 +106,42 @@ class RatingResultAdapter (
     }
 
     private fun removeItem(position: Int) {
-        val sharedPreferences = _context.getSharedPreferences("rating_prefs", Context.MODE_PRIVATE)
-        val uniqueId = dataSource[position].optString("unique_id")
+        val sharedPreferences = _context.getSharedPreferences("rating", Context.MODE_PRIVATE)
+        val jsonRatingResultList = sharedPreferences.getString("result", null)
         dataSource.removeAt(position)
-        sharedPreferences.edit().putString(uniqueId, dataSource.toString())
+
+        val tempRatingList = mutableListOf<RatingData>()
+
+        if (tempRatingList != null) {
+            val gson = Gson()
+            val ratingListType = object : TypeToken<List<RatingData>>() {}.type
+            val existingRatingList: List<RatingData>? = gson.fromJson(jsonRatingResultList, ratingListType)
+            if (existingRatingList != null) {
+                tempRatingList.addAll(existingRatingList)
+            }
+        }
+
+        tempRatingList.removeAt(position)
+
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val updatedJsonRatingList = gson.toJson(tempRatingList)
+
+        editor.putString("result", updatedJsonRatingList)
+        editor.apply()
+
+        /*
+        AlertDialog.Builder(_context)
+            .setTitle("Product Details")
+            .setMessage(updatedJsonRatingList)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+         */
+
+
         notifyDataSetChanged()
     }
 
@@ -148,6 +170,27 @@ class RatingResultAdapter (
             else -> R.drawable.grade_e
         }
         gradeImageView.setImageResource(gradeDrawable)
+
+        rowView.setOnClickListener {
+            val productData = getItem(position)
+            val details = """
+        Product Name: ${productData.getString("product_name")}
+        Food Type: ${productData.getString("food_type")}
+        Total Fats: ${productData.getString("total_fats")}
+        Sugars: ${productData.getString("sugars")}
+        Sodium: ${productData.getString("sodium")}
+        Score: ${productData.getString("score")}
+        Grade: ${productData.getString("grade")}
+    """.trimIndent()
+
+            AlertDialog.Builder(_context)
+                .setTitle("Product Details")
+                .setMessage(details)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
 
         val deleteButton = rowView.findViewById<ImageButton>(R.id.button_delete)
         deleteButton.setOnClickListener {

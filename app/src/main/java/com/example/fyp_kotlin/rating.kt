@@ -16,7 +16,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 data class Nutrition(val score : String, val grade : String)
-data class RatingData(val date_time: String,
+data class RatingData(val date_time: Int,
                       val product_name: String,
                       val food_type: String,
                       val total_fats: String,
@@ -53,11 +53,11 @@ class Rating : AppCompatActivity() {
 
     fun fetchNutritions() {
         setLoadingIndicator(true)
-        var foodType : String = postFoodType.toString()
-        var totalFat : String = postTotalfat.toString()
-        var sugars : String = postSugars.toString()
-        var sodium : String = postSodium.toString()
-        var param = FormBody.Builder()
+        val foodType : String = postFoodType.toString()
+        val totalFat : String = postTotalfat.toString()
+        val sugars : String = postSugars.toString()
+        val sodium : String = postSodium.toString()
+        val param = FormBody.Builder()
             .add("foodType", foodType)
             .add("totalFat", totalFat)
             .add("sugars", sugars)
@@ -137,6 +137,12 @@ class Rating : AppCompatActivity() {
         buttonSaveToFavourite.setOnClickListener {
             saveToFavouritesAndNavigate()
         }
+
+        val buttonBackToHome = findViewById<Button>(R.id.button_back_to_home)
+        buttonBackToHome.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun saveToFavouritesAndNavigate() {
@@ -162,7 +168,7 @@ class Rating : AppCompatActivity() {
         }
 
         val newRating = RatingData(
-            System.currentTimeMillis().toString(),
+            System.currentTimeMillis().toInt(),
             productName,
             postFoodType,
             postTotalfat,
@@ -172,6 +178,7 @@ class Rating : AppCompatActivity() {
             nutritions[0].grade
         )
         tempRatingList.add(newRating)
+        tempRatingList.sortByDescending { it.date_time }
 
         val editor = sharedPreferences.edit()
 
@@ -181,7 +188,7 @@ class Rating : AppCompatActivity() {
         editor.putString("result", updatedJsonRatingList)
         editor.apply()
 
-        /*
+/*
         AlertDialog.Builder(this)
             .setTitle("Product Details")
             .setMessage(updatedJsonRatingList)
@@ -190,7 +197,9 @@ class Rating : AppCompatActivity() {
             }
             .show()
 
-         */
+ */
+
+
 
         val intent = Intent(this, RatingResult::class.java)
         startActivity(intent)

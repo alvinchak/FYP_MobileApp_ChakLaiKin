@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/text_product_name"
@@ -42,6 +43,7 @@
         android:layout_marginStart="1dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_delete"
+        android:focusable="false"
         android:focusableInTouchMode="false"
         />
 

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RatingResult">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,7 +27,7 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="Take Image"
-            app:backgroundTint="#25389F"
+            app:backgroundTint="#076722"
             app:icon="@drawable/ic_baseline_add_a_photo_24" />
 
         <!--Button: Recognize text from the image we took from Camera/Gallery-->
@@ -53,8 +59,10 @@
                 android:id="@+id/imageIv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_baseline_image_24"
+                android:src="@drawable/healthyeating"
                 app:strokeWidth="2dp" />
 <!--
             <TextView
@@ -215,6 +223,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/GradingBtn"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
@@ -228,3 +237,13 @@
     </LinearLayout>
 
 </LinearLayout>
+    <Button
+        android:id="@+id/button_to_rating_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rating Records"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
