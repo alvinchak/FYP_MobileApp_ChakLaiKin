@@ -34,15 +34,23 @@ class MainActivity : AppCompatActivity() {
         val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
         val foodType = selectedRadioButton.text.toString()
 
+        val energy = findViewById<EditText>(R.id.editEnergy).text.toString()
         val totalFats = findViewById<EditText>(R.id.editTotalfat).text.toString()
         val sugars = findViewById<EditText>(R.id.editSugars).text.toString()
         val sodium = findViewById<EditText>(R.id.editSodium).text.toString()
+        val fruitVegetables = findViewById<EditText>(R.id.editFruitVegetables).text.toString()
+        val fibre = findViewById<EditText>(R.id.editFibre).text.toString()
+        val protein = findViewById<EditText>(R.id.editProtein).text.toString()
 
         val intent = Intent(this, Rating::class.java)
         intent.putExtra("FOOD_TYPE_KEY", foodType)
+        intent.putExtra("ENERGY_KEY", energy)
         intent.putExtra("TOTAL_FATS_KEY", totalFats)
         intent.putExtra("SUGARS_KEY", sugars)
         intent.putExtra("SODIUM_KEY", sodium)
+        intent.putExtra("FRUIT_VEGETABLES_KEY", fruitVegetables)
+        intent.putExtra("FIBRE_KEY", fibre)
+        intent.putExtra("PROTEIN_KEY", protein)
         startActivity(intent)
     }
 
@@ -56,10 +64,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var positionTotalfat: String
     private lateinit var positionSugar: String
     private lateinit var positionSodium: String
+    private lateinit var positionProtein: String
 
+    private lateinit var valueEnergy: EditText
     private lateinit var valueTotalfat: EditText
     private lateinit var valueSugars: EditText
+    private lateinit var valueFruitVegetables: EditText
     private lateinit var valueSodium: EditText
+    private lateinit var valueFibre: EditText
+    private lateinit var valueProtein: EditText
 
     private companion object{
         //to handle the result of Camera/Gallery permissions in onRequestPermissionResults
@@ -123,11 +136,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /*
         val buttonToResult = findViewById<Button>(R.id.button_to_rating_result)
         buttonToResult.setOnClickListener {
             val intent = Intent(this, RatingResult::class.java)
             startActivity(intent)
         }
+        */
 
     }
 
@@ -194,6 +209,10 @@ class MainActivity : AppCompatActivity() {
                             val index = newText.indexOf(i)
                             positionSodium = index.toString()
                         }
+                        if(i.contains("Protein")) {
+                            val index = newText.indexOf(i)
+                            positionProtein = index.toString()
+                        }
                         if(i.contains("kcal")) {
                             val index = newText.indexOf(i)
                             positionValueEnergy = index.toString()
@@ -210,6 +229,12 @@ class MainActivity : AppCompatActivity() {
                     val sodiumPosition = positionSodium.toInt() - positionEnergy.toInt() + positionValueEnergy.toInt()
                     val sodiumValue = newText[sodiumPosition]
 
+                    val energyPosition = positionEnergy.toInt() + positionValueEnergy.toInt()
+                    val energyValue = newText[energyPosition]
+
+                    val proteinPosition = positionProtein.toInt() - positionEnergy.toInt() + positionValueEnergy.toInt()
+                    val proteinValue = newText[proteinPosition]
+
 
                     var output = "Total Fats: "
                         .plus(sugarValue)
@@ -220,9 +245,11 @@ class MainActivity : AppCompatActivity() {
 
                     //recognizedTextEt.setText(output)
 
+                    valueEnergy.setText(energyValue)
                     valueTotalfat.setText(sugarValue)
                     valueSugars.setText(totalfatValue)
                     valueSodium.setText(sodiumValue)
+                    valueProtein.setText(proteinValue)
 
 
                     val radioFoodType = findViewById<RadioGroup>(R.id.foodType)
