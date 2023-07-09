@@ -44,12 +44,17 @@ class RatingResult : AppCompatActivity() {
 
             tempRatingList.forEach { ratingData ->
                 val productJson = JSONObject().apply {
-                    put("date_time", ratingData.date_time)
-                    put("product_name", ratingData.product_name)
-                    put("food_type", ratingData.food_type)
-                    put("total_fats", ratingData.total_fats)
+                    put("dateTime", ratingData.dateTime)
+                    put("productName", ratingData.productName)
+                    put("productBarcode", ratingData.productBarcode)
+                    put("foodType", ratingData.foodType)
+                    put("energy", ratingData.energy)
+                    put("satuFat", ratingData.satuFat)
                     put("sugars", ratingData.sugars)
                     put("sodium", ratingData.sodium)
+                    put("fruitVeget", ratingData.fruitVeget)
+                    put("fibre", ratingData.fibre)
+                    put("protein", ratingData.protein)
                     put("score", ratingData.score)
                     put("grade", ratingData.grade)
                 }
@@ -77,7 +82,7 @@ class RatingResult : AppCompatActivity() {
 
         val buttonBackToMain = findViewById<Button>(R.id.button_back_to_main)
         buttonBackToMain.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, Scanner::class.java)
             startActivity(intent)
         }
 
@@ -153,35 +158,39 @@ class RatingResultAdapter (
         val scoreTextView = rowView.findViewById<TextView>(R.id.text_score)
         val gradeImageView = rowView.findViewById<ImageView>(R.id.image_grade)
 
-        productNameTextView.text = productData.getString("product_name")
+        productNameTextView.text = productData.getString("productName")
         scoreTextView.text = productData.getString("score")
 
         val grade = productData.getString("grade")
         val gradeDrawable = when (grade) {
-            "A++" -> R.drawable.mini_grade_a_plus_plus
-            "A+" -> R.drawable.mini_grade_a_plus
             "A" -> R.drawable.mini_grade_a
             "B" -> R.drawable.mini_grade_b
             "C" -> R.drawable.mini_grade_c
             "D" -> R.drawable.mini_grade_d
             "E" -> R.drawable.mini_grade_e
-            "E-" -> R.drawable.mini_grade_e_minus
-            "E--" -> R.drawable.mini_grade_e_minus_minus
-            else -> R.drawable.grade_e
+            else -> R.drawable.mini_grade_e
         }
         gradeImageView.setImageResource(gradeDrawable)
 
         rowView.setOnClickListener {
             val productData = getItem(position)
             val details = """
-        Product Name: ${productData.getString("product_name")}
-        Food Type: ${productData.getString("food_type")}
-        Total Fats: ${productData.getString("total_fats")}
-        Sugars: ${productData.getString("sugars")}
-        Sodium: ${productData.getString("sodium")}
-        Score: ${productData.getString("score")}
-        Grade: ${productData.getString("grade")}
-    """.trimIndent()
+                Product Name: ${productData.getString("productName")}
+                Barcode: ${productData.getString("productBarcode")}
+                ------------------
+                Food Type: ${productData.getString("foodType")}
+                ------------------
+                Energy: ${productData.getString("energy")}kcal
+                Saturated Fat: ${productData.getString("satuFat")}g
+                Sugars: ${productData.getString("sugars")}g
+                Sodium: ${productData.getString("sodium")}mg
+                Fruit and vegetables: ${productData.getString("fruitVeget")}%
+                Fibre: ${productData.getString("fibre")}g
+                Protein: ${productData.getString("protein")}g
+                ------------------
+                Grade: ${productData.getString("grade")}
+                Score: ${productData.getString("score")}
+            """.trimIndent()
 
             AlertDialog.Builder(_context)
                 .setTitle("Product Details")
