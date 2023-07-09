@@ -88,7 +88,7 @@ class Rating : AppCompatActivity() {
             .add("protein", protein)
             .build()
         val request = Request.Builder()
-            .url("https://bsccom-fyp.chakalvin.repl.co/check2")
+            .url("https://6001cem-fyp.chakalvin.repl.co/api/v1/products/check")
             .post(param)
             .build()
         client.newCall(request).enqueue(object : Callback {

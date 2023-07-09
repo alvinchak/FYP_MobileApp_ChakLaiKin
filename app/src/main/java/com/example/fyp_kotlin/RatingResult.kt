@@ -1,19 +1,30 @@
 package com.example.fyp_kotlin
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.hardware.usb.UsbDevice.getDeviceId
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
+import android.provider.Settings
 
 class RatingResult : AppCompatActivity() {
 
@@ -150,6 +161,13 @@ class RatingResultAdapter (
         notifyDataSetChanged()
     }
 
+    fun getAndroidId(context: Context): String {
+        return Settings.Secure.getString(
+            context.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val rowView = convertView ?: inflater.inflate(R.layout.list_item_rating_result, parent, false)
 
@@ -198,9 +216,59 @@ class RatingResultAdapter (
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                 }
+                .setNegativeButton("Share") { dialog, _ ->
+                    AlertDialog.Builder(_context)
+                        .setTitle("Confirm")
+                        .setMessage("Confirm to share?")
+                        .setPositiveButton("Yes") { confirmDialog, _ ->
+                            confirmDialog.dismiss()
+                            dialog.dismiss()
+                            // Show loading animation and disable back button
+                            val progressDialog = ProgressDialog(_context).apply {
+                                setMessage("Sharing...")
+                                setCancelable(false)
+                                show()
+                            }
+
+                            val tempRequestBody = productData
+                            val androidId = getAndroidId(_context)
+                            tempRequestBody.remove("dateTime")
+                            tempRequestBody.put("platformId", androidId)
+                            val requestBody = tempRequestBody.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
+
+                            // Send POST request
+                            val request = Request.Builder()
+                                .url("https://6001cem-fyp.chakalvin.repl.co/api/v1/products/share")
+                                .post(requestBody)
+                                .build()
+
+                            val client = OkHttpClient()
+
+                            client.newCall(request).enqueue(object : Callback {
+                                override fun onResponse(call: Call, response: Response) {
+                                    // Close loading animation and enable back button
+                                    progressDialog.dismiss()
+                                    Handler(Looper.getMainLooper()).post {
+                                        Toast.makeText(_context, "Shared successfully!", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call, e: IOException) {
+                                    // Close loading animation and enable back button
+                                    progressDialog.dismiss()
+                                    Handler(Looper.getMainLooper()).post {
+                                        Toast.makeText(_context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            })
+                        }
+                        .setNegativeButton("No") { confirmDialog, _ ->
+                            confirmDialog.dismiss()
+                        }
+                        .show()
+                }
                 .show()
         }
-
         val deleteButton = rowView.findViewById<ImageButton>(R.id.button_delete)
         deleteButton.setOnClickListener {
             AlertDialog.Builder(_context)
