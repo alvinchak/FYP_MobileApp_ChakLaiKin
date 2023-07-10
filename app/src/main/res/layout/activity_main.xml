@@ -6,14 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_navigate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:text="Navigate to Second Activity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nslogo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/recommendListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonLinearLayout"
+            app:layout_constraintTop_toBottomOf="@id/logoImageView"
+            app:layout_constraintVertical_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/buttonLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/startRatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Rating" />
+
+            <Button
+                android:id="@+id/nutriScoreRatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nutri-Score Rating" />
+
+            <Button
+                android:id="@+id/myFavouritesButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Favourites" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

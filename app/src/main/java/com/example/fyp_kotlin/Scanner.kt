@@ -295,15 +295,7 @@ class Scanner : AppCompatActivity() {
                 }
             }
             else if (id==2){
-                //Gallery is clicked, check if storage permission is granted or not
-                if (checkStoragePermission()){
-                    //storage permission granted, we can launch the gallery intent
-                    pickImageGallery()
-                }
-                else {
-                    //storage permission not granted, request the storage permission
-                    requestStoragePermission()
-                }
+                pickImageGallery()
             }
 
             return@setOnMenuItemClickListener true
@@ -378,12 +370,6 @@ class Scanner : AppCompatActivity() {
         return cameraResult && storageResult
     }
 
-    private fun requestStoragePermission() {
-        //request storage permission (for gallery image pick)
-        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE)
-    }
-
-
     private fun requestCameraPermission(){
         //request camera permissions (for camera intent)
         ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE)
@@ -402,9 +388,8 @@ class Scanner : AppCompatActivity() {
                 if (grantResults.isNotEmpty()){
                     //Check if Camera, Storage permissions granted contains boolean results either true or false
                     val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    val storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
                     //Check if both permissions are granted or not
-                    if (cameraAccepted && storageAccepted) {
+                    if (cameraAccepted) {
                         //both permissions (Camera & Storage) are granted, we can launch camera intent
                         pickImageCamera()
                     }
@@ -415,22 +400,6 @@ class Scanner : AppCompatActivity() {
                 }
             }
 
-            STORAGE_REQUEST_CODE -> {
-                //Check if some action from permission dialog performed or not Allow/Deny
-                if (grantResults.isNotEmpty()){
-                    //Check if Storage permissions granted, contains boolean results either true or false
-                    val storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    //Check if Storage permission is granted or not
-                    if (storageAccepted) {
-                        //storage permission granted, we can launch gallery intent
-                        pickImageGallery()
-                    }
-                    else {
-                        //storage permission denied, cannot launch gallery intent
-                        showToast("Storage permission are required...")
-                    }
-                }
-            }
         }
     }
 
