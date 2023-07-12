@@ -12,20 +12,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/nslogo"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <TextView
+            android:id="@+id/recommendTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Newly Recommended Products"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:background="@color/purple_200"
+            android:textColor="@color/white"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintTop_toBottomOf="@id/logoImageView"
+            app:layout_constraintBottom_toTopOf="@id/recommendListViewContainer"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/recommendListViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/recommendTextView"
+            app:layout_constraintBottom_toTopOf="@id/buttonLinearLayout"
+            >
         <ListView
             android:id="@+id/recommendListView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/buttonLinearLayout"
-            app:layout_constraintTop_toBottomOf="@id/logoImageView"
-            app:layout_constraintVertical_weight="1" />
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_weight="1"
+            tools:layout_editor_absoluteX="0dp"
 
-        <LinearLayout
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
             android:id="@+id/buttonLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +72,7 @@
                 android:id="@+id/nutriScoreRatingButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nutri-Score Rating" />
+                android:text="About Nutri-Score Rating" />
 
             <Button
                 android:id="@+id/myFavouritesButton"
@@ -52,13 +82,14 @@
 
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/loadingProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="134dp"
+        android:layout_height="126dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
