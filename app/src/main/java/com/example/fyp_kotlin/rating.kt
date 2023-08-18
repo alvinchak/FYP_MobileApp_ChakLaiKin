@@ -24,6 +24,7 @@ import java.io.IOException
 data class Nutrition(val score : String, val grade : String)
 data class RatingData(val dateTime: Int,
                       val productName: String,
+                      val manufacturer: String,
                       val productBarcode: String,
                       val foodType: String,
                       val energy: String,
@@ -170,8 +171,8 @@ class Rating : AppCompatActivity() {
             saveToFavouritesAndNavigate()
         }
 
-        val buttonBackToHome = findViewById<Button>(R.id.button_back_to_home)
-        buttonBackToHome.setOnClickListener {
+        val buttonBack = findViewById<Button>(R.id.rating_button_back_previous)
+        buttonBack.setOnClickListener {
             val intent = Intent(this, Scanner::class.java)
             startActivity(intent)
         }
@@ -251,6 +252,13 @@ class Rating : AppCompatActivity() {
             return
         }
 
+        val manufacturerEditText = findViewById<EditText>(R.id.text_save_manufacturer)
+        val manufacturer = manufacturerEditText.text.toString()
+        if (manufacturer.isBlank()) {
+            Toast.makeText(this, "Please enter the manufacturer", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val productBarcodeEditText = findViewById<EditText>(R.id.text_scan_barcode)
         val productBarcode = productBarcodeEditText.text.toString()
         if (productBarcode.isBlank()) {
@@ -275,6 +283,7 @@ class Rating : AppCompatActivity() {
         val newRating = RatingData(
             System.currentTimeMillis().toInt(),
             productName,
+            manufacturer,
             productBarcode,
             postFoodType,
             postEnergy,

@@ -150,6 +150,12 @@ class Scanner : AppCompatActivity() {
         }
         */
 
+        val backButton = findViewById<Button>(R.id.scannerBackButton)
+        backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun recognizeTextFromImage() {

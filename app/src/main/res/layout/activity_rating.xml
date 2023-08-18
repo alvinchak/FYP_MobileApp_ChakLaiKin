@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Rating">
 
     <LinearLayout
@@ -36,6 +36,13 @@
             android:textAlignment="center"
             android:textSize="50sp"
             android:layout_margin="0dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="(High Quality)  -15 to 40  (Low Quality)"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_margin="0dp"/>
 
     </LinearLayout>
 
@@ -44,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="33sp"
+        android:layout_marginTop="22sp"
         android:paddingLeft="22sp"
         android:paddingRight="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,21 +65,12 @@
             android:orientation="vertical"
             android:paddingLeft="22sp"
             android:paddingRight="22sp"
-            android:paddingTop="22sp"
-            android:paddingBottom="22sp"
+            android:paddingTop="11sp"
+            android:paddingBottom="4sp"
             android:background="@drawable/shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" >
-
-            <TextView
-                android:id="@+id/text_title_favourite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter Product Name"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:layout_margin="0dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,6 +87,7 @@
                     android:background="@color/white"
                     android:inputType="number"
                     android:textAlignment="center"
+                    android:hint="Enter Barcode"
                     android:textSize="24sp"
                     android:layout_margin="0dp"
                     />
@@ -117,9 +116,23 @@
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:background="@color/white"
+                android:hint="Product Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="0dp" />
+
+            <EditText
+                android:id="@+id/text_save_manufacturer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:background="@color/white"
+                android:hint="Manufacturer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/button_save_to_favourite"
@@ -136,15 +149,15 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/rating_button_back_previous"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Go Back" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_back_to_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back to Home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,6 +57,7 @@ class RatingResult : AppCompatActivity() {
                 val productJson = JSONObject().apply {
                     put("dateTime", ratingData.dateTime)
                     put("productName", ratingData.productName)
+                    put("manufacturer", ratingData.manufacturer)
                     put("productBarcode", ratingData.productBarcode)
                     put("foodType", ratingData.foodType)
                     put("energy", ratingData.energy)
@@ -93,7 +94,7 @@ class RatingResult : AppCompatActivity() {
 
         val buttonBackToMain = findViewById<Button>(R.id.button_back_to_main)
         buttonBackToMain.setOnClickListener {
-            val intent = Intent(this, Scanner::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
@@ -173,10 +174,12 @@ class RatingResultAdapter (
 
         val productData = getItem(position)
         val productNameTextView = rowView.findViewById<TextView>(R.id.text_product_name)
+        val manufacturerTextView = rowView.findViewById<TextView>(R.id.text_manufacturer)
         val scoreTextView = rowView.findViewById<TextView>(R.id.text_score)
         val gradeImageView = rowView.findViewById<ImageView>(R.id.image_grade)
 
         productNameTextView.text = productData.getString("productName")
+        manufacturerTextView.text = productData.getString("manufacturer")
         scoreTextView.text = productData.getString("score")
 
         val grade = productData.getString("grade")
@@ -195,6 +198,8 @@ class RatingResultAdapter (
             val details = """
                 Product Name: ${productData.getString("productName")}
                 Barcode: ${productData.getString("productBarcode")}
+                ------------------
+                Manufacturer: ${productData.getString("manufacturer")}
                 ------------------
                 Food Type: ${productData.getString("foodType")}
                 ------------------

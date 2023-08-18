@@ -7,28 +7,39 @@
     tools:context=".MainActivity">
 
 
-        <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/nslogo"
-            android:adjustViewBounds="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/recommendGroup"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+        app:layout_constraintBottom_toTopOf="@id/buttonLinearLayout"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/blue_700"
+        >
 
         <TextView
             android:id="@+id/recommendTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Newly Recommended Products"
+            android:text="▼ Newly Recommended Products ▼"
             android:textAlignment="center"
             android:textSize="20dp"
-            android:background="@color/purple_200"
+            android:background="@color/blue_200"
             android:textColor="@color/white"
-            android:paddingTop="5dp"
+            android:paddingTop="25dp"
             android:paddingBottom="5dp"
             app:layout_constraintTop_toBottomOf="@id/logoImageView"
             app:layout_constraintBottom_toTopOf="@id/recommendListViewContainer"
@@ -38,46 +49,67 @@
         <LinearLayout
             android:id="@+id/recommendListViewContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@id/recommendTextView"
             app:layout_constraintBottom_toTopOf="@id/buttonLinearLayout"
             >
-        <ListView
-            android:id="@+id/recommendListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintVertical_weight="1"
-            tools:layout_editor_absoluteX="0dp"
 
-            />
+            <ListView
+                android:id="@+id/recommendListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_weight="1"
 
-    </LinearLayout>
+                tools:layout_editor_absoluteX="0dp" />
 
+        </LinearLayout>
+</LinearLayout>
 
     <LinearLayout
             android:id="@+id/buttonLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="#DAE0FF"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp"
             app:layout_constraintBottom_toBottomOf="parent">
+
 
             <Button
                 android:id="@+id/startRatingButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:textSize="18dp"
                 android:text="Start Rating" />
 
             <Button
                 android:id="@+id/nutriScoreRatingButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:textSize="18dp"
                 android:text="About Nutri-Score Rating" />
 
             <Button
                 android:id="@+id/myFavouritesButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:textSize="18dp"
                 android:text="My Favourites" />
 
         </LinearLayout>

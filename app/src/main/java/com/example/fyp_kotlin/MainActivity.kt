@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
                             val product = Product(
                                 productbarcode = jsonObject.getString("productbarcode"),
                                 productname = jsonObject.getString("productname"),
-                                score = jsonObject.getDouble("score"),
+                                manufacturer = jsonObject.getString("manufacturer"),
+                                score = jsonObject.getString("score"),
                                 grade = jsonObject.getString("grade"),
                                 foodtype = jsonObject.getString("foodtype"),
                                 energy = jsonObject.getDouble("energy"),
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         nutriScoreRatingButton.setOnClickListener {
-            val intent = Intent(this, RatingResult::class.java)
+            val intent = Intent(this, Information::class.java)
             startActivity(intent)
         }
 
@@ -116,7 +117,8 @@ class MainActivity : AppCompatActivity() {
     data class Product(
         val productbarcode: String,
         val productname: String,
-        val score: Double,
+        val manufacturer: String,
+        val score: String,
         val grade: String,
         val foodtype: String,
         val energy: Double,
@@ -131,9 +133,15 @@ class MainActivity : AppCompatActivity() {
             return """
                 Product Barcode: $productbarcode
                 Product Name: $productname
+                --------------------
+                Manufacturer: $manufacturer
+                --------------------
                 Score: $score
                 Grade: $grade
+                --------------------
                 Food Type: $foodtype
+                --------------------
+                [Nutrients]
                 Energy: $energy
                 Sugars: $sugars
                 Saturated Fat: $satufat
@@ -156,10 +164,12 @@ class ProductAdapter(context: Context, resource: Int, objects: MutableList<MainA
         val product = getItem(position)
 
         val productNameTextView = view.findViewById<TextView>(R.id.productNameTextView)
+        val manufacturerTextView = view.findViewById<TextView>(R.id.manufacturerTextView)
         val gradeImageView = view.findViewById<ImageView>(R.id.gradeImageView)
         val scoreTextView = view.findViewById<TextView>(R.id.scoreTextView)
 
         productNameTextView.text = product?.productname
+        manufacturerTextView.text = product?.manufacturer
         scoreTextView.text = product?.score.toString()
 
         // Set the grade image based on the grade value
